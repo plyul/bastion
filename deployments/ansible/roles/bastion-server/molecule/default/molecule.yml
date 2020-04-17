@@ -1,0 +1,28 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: bastion-host
+    image: ubuntu:18.04
+    pre_build_image: false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    groups:
+      - bastion-servers
+provisioner:
+  name: ansible
+  playbooks:
+    cleanup: cleanup.yml
+  options:
+    vvv: true
+  log: true
+  inventory:
+    group_vars:
+      bastion-servers:
+        version: "latest"
+        servicepoint: "192.168.1.4"
+        oidc_secret: "my-super-secret-secret-for-bastion-server"
+verifier:
+  name: ansible

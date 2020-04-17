@@ -1,0 +1,9 @@
+---
+docker_repository: "docker.example.com"
+
+dsn_user: "bastion"
+dsn_password: "bastion"
+dsn_database: "bastion"
+
+exposed_database_port: 13306
+exposed_server_port: 1443

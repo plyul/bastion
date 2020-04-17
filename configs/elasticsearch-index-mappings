@@ -1,0 +1,6 @@
+"properties": {
+  "level":    { "type": "keyword" },
+  "time":  { "type": "date"  },
+  "caller":   { "type": "keyword"  },
+  "message": { "type": "text" }
+}

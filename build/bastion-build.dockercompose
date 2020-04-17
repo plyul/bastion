@@ -1,0 +1,18 @@
+version: '2.4'
+services:
+  server:
+    image: "${DOCKER_REPO}/bastion-server:${VERSION}"
+    build:
+      context: ..
+      dockerfile: build/bastion-build.dockerfile
+      args:
+        - BASTION_VERSION=${VERSION}
+      target: bastion-server
+  proxy:
+    image: "${DOCKER_REPO}/bastion-proxy:${VERSION}"
+    build:
+      context: ..
+      dockerfile: build/bastion-build.dockerfile
+      args:
+        - BASTION_VERSION=${VERSION}
+      target: bastion-proxy

@@ -1,0 +1,8 @@
+---
+- name: Cleanup
+  hosts: all
+  tasks:
+    - name: Remove proxy container
+      docker_container:
+        name: "bastion-proxy-{{network|lower}}"
+        state: absent

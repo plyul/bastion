@@ -1,0 +1,26 @@
+---
+- name: Install Docker SDK for Python
+  apt:
+    pkg:
+      - python-docker
+      - python3-docker
+    state: present
+
+- name: Create Bastion proxy container
+  docker_container:
+    name: "bastion-proxy-{{network|lower}}"
+    image: "{{docker_repository}}/bastion-proxy:{{version}}"
+    pull: true
+    env:
+      TZ: "Asia/Yekaterinburg"
+      LANG: "C.UTF-8"
+    ports:
+      - "{{servicepoint}}:{{exposed_port}}:2200"
+    command: >-
+      --api-url {{api_url}}
+      --log-level debug
+      --network {{network}}
+      --oidc-client-id bastion-proxy
+      --oidc-client-secret {{oidc_secret}}
+      --oidc-issuer https://idp.example.com/
+    state: started

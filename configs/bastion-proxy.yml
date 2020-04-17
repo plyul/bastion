@@ -1,0 +1,12 @@
+log:
+  level: "debug"
+api:
+  url: "https://bastion.internal.example.com:1443"
+  certificateFile: "web/certs/bastion-cert.pem"
+oidc:
+  issuer: "https://idp.example.com/"
+  clientID: "bastion-proxy"
+  clientSecret: "HZcUo8JiiNI5Vrc1VG1DTNqRNSY5fTXE9Sn2qwj2"
+bindAddress: "0.0.0.0:2203"
+guardedNetwork: "NT3"
+connectTimeout: 5

@@ -1,0 +1,11 @@
+FROM debian:10-slim
+
+ENV TZ=Asia/Yekaterinburg
+ENV LANG=C.UTF-8
+
+RUN apt-get update && apt-get -y install openssh-server mc procps
+RUN mkdir -p /run/sshd
+RUN useradd -m sshtest
+RUN echo sshtest:sshtest | chpasswd
+EXPOSE 22/tcp
+ENTRYPOINT ["/usr/sbin/sshd", "-D"]

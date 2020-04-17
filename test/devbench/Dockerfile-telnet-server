@@ -1,0 +1,12 @@
+FROM debian:10-slim
+
+ENV TZ=Asia/Yekaterinburg
+ENV LANG=C.UTF-8
+
+RUN apt-get update && apt-get -y install xinetd telnetd mc procps
+COPY ./xinet.d/telnet /etc/xinetd.d/telnet
+RUN useradd -m teltest
+RUN echo teltest:teltestPassw0rd | chpasswd
+EXPOSE 23/tcp
+WORKDIR /tmp
+ENTRYPOINT ["script", "-c", "/usr/sbin/xinetd -d -dontfork"]

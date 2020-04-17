@@ -1,0 +1,13 @@
+---
+- name: Create directory for docker certificates
+  file:
+    path: /etc/docker/certs.d/
+    state: directory
+    mode: 755
+
+- name: "Add certificate to docker registry as root CA"
+  copy:
+    src: example.com_ca.crt
+    dest: "/etc/docker/certs.d/{{docker_repository}}"
+    mode: 0644
+    force: no

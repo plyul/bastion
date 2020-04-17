@@ -1,0 +1,3 @@
+---
+- import_playbook: bastion-servers.yml
+- import_playbook: bastion-proxies.yml

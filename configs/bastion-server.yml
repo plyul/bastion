@@ -1,0 +1,19 @@
+log:
+  level: "debug"
+  printRequests: true
+tls:
+  certificateFile: "web/certs/bastion-cert.pem"
+  keyFile: "web/certs/bastion-key.pem"
+oidc:
+  issuer: "https://idp.example.com/"
+  clientID: "bastion-server"
+  clientSecret: "5HWLRe8S3C8nQMK8Wv9a3UeoEm7wvkzbVTpoU8KY"
+  redirectURL: "https://bastion.internal.example.com:1443/auth/callback"
+  sessionTTLSeconds: 32400
+  allowedConfidentialClients: ["bastion-proxy"]
+web:
+  staticContentDir: "web/webroot/static"
+  templatesDir: "web/templates"
+datastore:
+  dataSourceName: "bastion:bastion@tcp(10.69.0.2)/bastion"
+bindAddress: "0.0.0.0:1443"

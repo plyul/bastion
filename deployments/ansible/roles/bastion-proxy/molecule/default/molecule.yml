@@ -1,0 +1,33 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: edge1
+    image: debian:10
+    pre_build_image: false
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:rw
+    groups:
+      - bastion-proxies
+provisioner:
+  name: ansible
+  playbooks:
+    cleanup: cleanup.yml
+  options:
+    vvv: true
+  log: true
+  inventory:
+    group_vars:
+      bastion-proxies:
+        servicepoint: "192.168.1.4"
+        version: "latest"
+        api_url: "https://192.168.1.4:1443"
+        oidc_secret: "my-super-secret-secret-for-bastion-proxy"
+    host_vars:
+      edge1:
+        network: "NT3"
+        exposed_port: 2203
+verifier:
+  name: ansible

@@ -1,0 +1,19 @@
+{
+    "hosts": [
+        "bastion.example.com"
+    ],
+    "CN": "bastion.example.com",
+    "key": {
+        "algo": "rsa",
+        "size": 2048
+    },
+    "names": [
+        {
+            "C":  "RU",
+            "L":  "Yekaterinburg",
+            "O":  "Example.com",
+            "OU": "Bastion",
+            "ST": "Sverdlovsk Oblast"
+        }
+    ]
+}

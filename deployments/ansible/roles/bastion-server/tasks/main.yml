@@ -1,0 +1,50 @@
+---
+- name: Install Docker SDK for Python
+  apt:
+    pkg:
+      - python-docker
+      - python3-docker
+    state: present
+
+- name: Create Bastion database container
+  docker_container:
+    name: "bastion-db"
+    image: mariadb:10.4
+    env:
+      TZ: "Asia/Yekaterinburg"
+      LANG: "C.UTF-8"
+      MYSQL_ROOT_PASSWORD: "bastion"
+    ports:
+      - "{{servicepoint}}:{{exposed_database_port}}:3306"
+    volumes:
+      - /srv/bastion/db:/var/lib/mysql
+      - /{{playbook_dir}}/../../../../../../api/sql_scheme:/docker-entrypoint-initdb.d
+    state: started
+- name: Wait for database to be ready
+  wait_for:
+    host: "{{servicepoint}}"
+    port: "{{exposed_database_port}}"
+    state: started
+
+- name: Create Bastion server container
+  docker_container:
+    name: "bastion-server"
+    image: "{{docker_repository}}/bastion-server:{{version}}"
+    pull: true
+    env:
+      TZ: "Asia/Yekaterinburg"
+      LANG: "C.UTF-8"
+    ports:
+      - "{{servicepoint}}:{{exposed_server_port}}:1443"
+    volumes:
+      - /srv/bastion/sessions:/srv/bastion/sessions
+    command: >-
+      --log-requests
+      --log-level debug
+      --datastore-dsn '{{dsn_user}}:{{dsn_password}}@tcp({{servicepoint}}:{{exposed_database_port}})/{{dsn_database}}'
+      --oidc-allowed-client-id bastion-proxy
+      --oidc-client-id bastion-server
+      --oidc-client-secret {{oidc_secret}}
+      --oidc-issuer https://idp.example.com/
+      --oidc-redirect-url https://{{servicepoint}}:{{exposed_server_port}}/auth/callback
+    state: started

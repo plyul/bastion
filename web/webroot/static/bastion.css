@@ -1,0 +1,159 @@
+body {
+    font-family: "Geometria", Arial, sans-serif;
+    color: #828b92;
+    background-color: #212c35;
+}
+
+* {
+    box-sizing: border-box;
+    font-size: 13px;
+}
+
+.header {
+    text-align: right;
+    overflow: auto;
+}
+
+.logo {
+    font-family: "Stefanit";
+    font-size: 4em;
+}
+
+.linearBlock {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+}
+
+.mainArea {
+    text-align: center;
+}
+
+.connNameInput {
+    display: block;
+    width: 100%;
+}
+
+.hostInput {
+    width: 80%;
+}
+
+.portInput {
+    width: 15%;
+    float: right;
+}
+
+.accessParameters {
+    padding-top: 1em;
+    height: 12em;
+    text-align: center;
+}
+
+.connectionContainer {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    overflow: auto;
+}
+
+.connections {
+    overflow-y: scroll;
+}
+
+.spacer {
+    display: inline-block;
+    width: 2em;
+}
+
+.floatLeft {
+    float: left;
+}
+
+.floatRight {
+    float: right;
+}
+
+.floatNone {
+    float: none;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+a {
+    color: #828b92;
+    text-decoration: none;
+}
+
+a.active {
+    color: #3dcc91;
+}
+
+a:hover {
+    color: #bac6cd;
+}
+
+fieldset {
+    border: #828b92 1px solid;
+    border-radius: 4px 4px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+button {
+    color: #828b92;
+    background-color: #212c35;
+    margin: 0.5em;
+    padding: 0.5em;
+    border-color: #828b92;
+    border-width: 1px;
+    border-radius: 4px 4px;
+    border-style: outset;
+}
+
+button.compactFlat {
+    margin: 0;
+    padding: 0 0 0 0.5em;
+    border: none;
+}
+
+button:hover {
+    color: #bac6cd;
+}
+
+select {
+    margin: 0.25em;
+}
+
+input[type=text], input[type=password] {
+    height: 2.25em;
+    margin: 0.25em;
+    padding: 0.5em;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px 4px;
+    outline: none;
+    color: #D3D7CF;
+    caret-color: #D3D7CF;
+}
+
+input[type=radio]:checked {
+    background: #828b92;
+}
+
+input[type=radio] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    background: #212c35;
+    margin-left: 10px;
+    border: 1px solid #828b92;
+}
+
+@font-face {
+    font-family: 'Stefanit';
+    src: url("/webfonts/stefanit.ttf");
+}

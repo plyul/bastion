@@ -1,0 +1,12 @@
+---
+- name: Cleanup
+  hosts: all
+  tasks:
+    - name: Remove server container
+      docker_container:
+        name: "bastion-server"
+        state: absent
+    - name: Remove db container
+      docker_container:
+        name: "bastion-db"
+        state: absent

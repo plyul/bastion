@@ -1,0 +1,68 @@
+version: '2.4'
+services:
+  db:
+    container_name: db
+    hostname: db
+    image: mariadb:latest
+    environment:
+      - TZ=Asia/Yekaterinburg
+      - LANG=C.UTF-8
+      - MYSQL_ROOT_PASSWORD=bastion
+    volumes:
+      - type: bind
+        source: ${PWD}/../../api/sql_scheme
+        target: /docker-entrypoint-initdb.d
+    ports:
+      - "13306:3306/tcp"
+    networks:
+      external:
+        ipv4_address: 10.69.0.2
+
+  ssh-server:
+    container_name: ssh-server
+    hostname: ssh-server
+    image: ssh-server
+    build:
+      dockerfile: ./Dockerfile-ssh-server
+      context: .
+    environment:
+      - TZ=Asia/Yekaterinburg
+      - LANG=C.UTF-8
+    ports:
+      - "2022:22/tcp"
+    networks:
+      internal:
+        ipv4_address: 10.73.0.2
+
+  telnet-server:
+    container_name: telnet-server
+    hostname: telnet-server
+    image: telnet-server
+    build:
+      dockerfile: ./Dockerfile-telnet-server
+      context: .
+    environment:
+      - TZ=Asia/Yekaterinburg
+      - LANG=C.UTF-8
+    ports:
+      - "2023:23/tcp"
+    restart: always
+    networks:
+      internal:
+        ipv4_address: 10.73.0.3
+
+networks:
+  external:
+    enable_ipv6: false
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.69.0.0/24
+          gateway: 10.69.0.1
+  internal:
+    enable_ipv6: false
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.73.0.0/24
+          gateway: 10.73.0.1

@@ -1,0 +1,18 @@
+all:
+  children:
+    bastion-servers:
+      hosts:
+        bastion.internal.example.com:
+      vars:
+        version: "latest"
+        servicepoint: "bastion.example.com"
+        oidc_secret: "my-super-secret-secret-for-bastion-server"
+    bastion-proxies:
+      hosts:
+        edge.internal.example.com:
+          servicepoint: "edge.example.com"
+          network: "GRT"
+      vars:
+        version: "latest"
+        api_url: "https://bastion.internal.example.com:1443"
+        oidc_secret: "my-super-secret-secret-for-bastion-proxy"

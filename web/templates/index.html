@@ -1,0 +1,82 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Бастион</title>
+    <link rel="stylesheet" href="/bastion.css">
+    <link rel="stylesheet" href="/fa.css">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="header">
+        <span class="logo floatLeft">Бастион</span>
+        <span class="">{{.DisplayName}} ({{.Email}})</span>
+        <button type="button" id="logoffButton" class="">
+            <span class="fas fa-power-off"></span>
+        </button>
+    </div>
+    <div class="mainArea">
+        <div class="linearBlock">
+            <fieldset id="connParams">
+                <legend>Параметры подключения</legend>
+                    <input id="connectionName" type="text" placeholder="Название подключения" class="connNameInput">
+                    <input id="hostname" type="text" placeholder="Имя (IP-адрес) хоста" class="hostInput">
+                    <input id="port" type="text" placeholder="Порт" class="portInput">
+                    <fieldset>
+                        <legend>Протокол</legend>
+                        {{range .Protocols}}
+                            <input type="radio" id="proto_{{.Name}}" name="protocol" value="{{.ID}}" data-default-port="{{.DefaultPort}}"><label for="proto_{{.Name}}">{{.Name}}</label>
+                        {{end}}
+                    </fieldset>
+                    <fieldset>
+                        <legend>Параметры доступа</legend>
+                        <div>
+                            <input type="radio" id="mandate" name="accessType" value="mandate" checked><label for="mandate">Мандат</label>
+                            <input type="radio" id="custom" name="accessType" value="custom"><label for="custom">Индивидуальные учётные данные</label>
+                        </div>
+                        <div id="mandateAccessParameters" class="accessParameters">
+                            <select id="mandateSelect">
+                                {{range .Mandates}}
+                                    <option value="{{.ID}}">{{.Name}}</option>
+                                {{end}}
+                            </select>
+                        </div>
+                        <div id="customAccessParameters" class="accessParameters">
+                            <div>
+                                <label for="customNetwork">Сеть:</label>
+                                <select id="customNetwork">
+                                    {{range .Networks}}
+                                        <option value="{{.ID}}">{{.Name}}</option>
+                                    {{end}}
+                                </select>
+                            </div>
+                            <div><input type='text' id='customLogin' placeholder='Логин'></div>
+                            <div><input type='password' id='customPassword' placeholder='Пароль'></div>
+                            <div><input type='text' id='customKey' placeholder='Приватный ключ'></div>
+                        </div>
+                    </fieldset>
+                    <div>
+                        <button type="button" id="createSessionButton" class="floatRight">
+                            <span class="fas fa-desktop"></span>&nbsp;<span>Подключиться</span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="button" id="saveSessionButton" class="floatRight">
+                            <span class="fas fa-save"></span>&nbsp;<span>Сохранить...</span>
+                        </button>
+                    </div>
+            </fieldset>
+        </div>
+        <div class="linearBlock">
+            <fieldset class="connections" id="connections">
+            </fieldset>
+        </div>
+    </div>
+    <script src="/helpers.js"></script>
+</body>
+</html>
+{{end}}
