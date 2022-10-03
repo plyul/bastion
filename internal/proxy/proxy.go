@@ -3,15 +3,16 @@ package proxy
 import (
 	"bastion/internal/log"
 	"fmt"
-	"github.com/gliderlabs/ssh"
-	expect "github.com/google/goexpect"
-	"github.com/plyul/telnet"
-	"go.uber.org/zap"
 	"io"
 	"net"
 	"regexp"
 	"strings"
 	"time"
+
+	"github.com/gliderlabs/ssh"
+	expect "github.com/google/goexpect"
+	"github.com/plyul/telnet"
+	"go.uber.org/zap"
 )
 
 type proxySessionData struct {
@@ -28,12 +29,11 @@ type proxySessionData struct {
 	targetPrivKey  string
 }
 
+// /--------\ stdout -> R /--------\ W ->  stdin /--------\
+// | client |             | proxy  |             | target |
+// \--------/ stdin  <- W \--------/ R <- stdout \--------/
 //
-//  /--------\ stdout -> R /--------\ W ->  stdin /--------\
-//  | client |             | proxy  |             | target |
-//  \--------/ stdin  <- W \--------/ R <- stdout \--------/
-//             stderr <- W(!)      (!)R <- stderr
-//
+//	stderr <- W(!)      (!)R <- stderr
 func (app *BastionProxy) SessionHandler(clientSession ssh.Session) {
 	clientAddress := strings.Split(clientSession.RemoteAddr().String(), ":")[0]
 	token := clientSession.User()
