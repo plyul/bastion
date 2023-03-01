@@ -16,7 +16,7 @@ import (
 
 // OIDCMiddleware осуществляет авторизацию пользователя по ID Token в web-сессии (для кожаных ублюдков) или
 // по Access Token в заголовке запроса (вива ла роботолюция!)
-//noinspection GoNilness
+// noinspection GoNilness
 func (app *BastionServer) OIDCMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(ctx echo.Context) error {
 		rl := ctx.Get(requestLoggerContextKey).(*zap.Logger)

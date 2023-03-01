@@ -1,13 +1,14 @@
 package auth
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/coreos/go-oidc"
 	"go.uber.org/zap"
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/clientcredentials"
-	"net/http"
-	"time"
 )
 
 type OIDCClient struct {
@@ -33,7 +34,8 @@ func New(issuer, clientID, clientSecret, redirectURL string, scopes []string) (*
 	}
 	c.provider = *provider
 
-	s := append(scopes, oidc.ScopeOpenID)
+	s := scopes
+	s = append(s, oidc.ScopeOpenID)
 	c.acgConfig = oauth2.Config{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

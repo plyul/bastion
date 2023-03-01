@@ -4,6 +4,7 @@ import (
 	"bastion/internal/api/client"
 	"bastion/internal/log"
 	"fmt"
+
 	"github.com/gliderlabs/ssh"
 	"go.uber.org/zap"
 )

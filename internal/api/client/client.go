@@ -8,10 +8,12 @@ import (
 	"crypto/x509"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"os"
+
 	"go.uber.org/zap"
 	"golang.org/x/oauth2"
-	"io/ioutil"
-	"net/http"
 )
 
 type APIClientConfig struct {
@@ -47,7 +49,7 @@ func New(c APIClientConfig) (APIClient, error) {
 		return apiClient, err
 	}
 	c.Logger.Debug("Loading certificate", zap.String("cert_file", c.CertificateFile))
-	certs, err := ioutil.ReadFile(c.CertificateFile)
+	certs, err := os.ReadFile(c.CertificateFile)
 	if err != nil {
 		c.Logger.Error(err.Error())
 		return apiClient, err
@@ -79,7 +81,7 @@ func (a APIClient) GetSession(token string) (api.ReadSessionDTO, error) {
 	if err != nil {
 		return sess, err
 	}
-	body, err := ioutil.ReadAll(sessionsResponse.Body)
+	body, err := io.ReadAll(sessionsResponse.Body)
 	if err != nil {
 		return sess, err
 	}

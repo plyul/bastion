@@ -6,15 +6,16 @@ import (
 	"bastion/internal/log"
 	"context"
 	"fmt"
+	"html/template"
+	"io"
+	"net/http"
+	"os"
+
 	"github.com/coreos/go-oidc"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go.uber.org/zap"
-	"html/template"
-	"io"
-	"net/http"
-	"os"
 )
 
 type BastionServer struct {
@@ -102,7 +103,7 @@ func New() BastionServer {
 
 	api.POST("/sessions", app.createSessionHandler)
 	api.GET("/sessions/:token", app.readSessionHandler)
-	//api.DELETE("/sessions/:token", app.DeleteSessionHandler)
+	// api.DELETE("/sessions/:token", app.DeleteSessionHandler)
 
 	api.POST("/sessiontemplates", app.createSessionTemplateHandler)
 	api.DELETE("/sessiontemplates/:id", app.deleteSessionTemplateHandler)

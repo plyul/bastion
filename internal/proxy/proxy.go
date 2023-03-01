@@ -56,7 +56,7 @@ func (app *BastionProxy) SessionHandler(clientSession ssh.Session) {
 		return
 	}
 
-	_, err = io.WriteString(clientSession, fmt.Sprintf("Бастион приветствует тебя!\nЕсли ты будешь хулиганить, то я вычислю тебя по IP!\n\n"))
+	_, err = io.WriteString(clientSession, "Бастион приветствует тебя!\nЕсли ты будешь хулиганить, то я вычислю тебя по IP!\n\n")
 	if err != nil {
 		sessionLogger.Error(err.Error())
 		return
@@ -94,7 +94,7 @@ func (app *BastionProxy) SessionHandler(clientSession ssh.Session) {
 	_ = sessionLogger.Sync()
 }
 
-func (app *BastionProxy) ConnCallback(conn net.Conn) net.Conn {
+func (app *BastionProxy) ConnCallback(ctx ssh.Context, conn net.Conn) net.Conn {
 	_ = conn.SetDeadline(time.Now().Add(time.Second * time.Duration(app.config.ConnectTimeoutSec)))
 	return conn
 }

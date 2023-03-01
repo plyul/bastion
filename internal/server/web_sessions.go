@@ -19,7 +19,7 @@ func (app *BastionServer) initSessionStore() {
 	app.sessions = store
 }
 
-//noinspection GoNilness
+// noinspection GoNilness
 func (app *BastionServer) saveTokenToSession(token *oauth2.Token, context echo.Context) error {
 	rl := context.Get(requestLoggerContextKey).(*zap.Logger)
 	session, err := app.sessions.Get(context.Request(), cookieName)
@@ -44,7 +44,7 @@ func (app *BastionServer) saveTokenToSession(token *oauth2.Token, context echo.C
 	return nil
 }
 
-//noinspection GoNilness
+// noinspection GoNilness
 func (app *BastionServer) newStateToken(context echo.Context) (string, error) {
 	rl := context.Get(requestLoggerContextKey).(*zap.Logger)
 	rdata := securecookie.GenerateRandomKey(64)
@@ -62,7 +62,7 @@ func (app *BastionServer) newStateToken(context echo.Context) (string, error) {
 	return stateToken, nil
 }
 
-//noinspection GoNilness
+// noinspection GoNilness
 func (app *BastionServer) rawIDToken(context echo.Context) (string, error) {
 	session, err := app.sessions.Get(context.Request(), cookieName)
 	if err != nil {
